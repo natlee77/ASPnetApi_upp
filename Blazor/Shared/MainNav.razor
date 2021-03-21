@@ -1,0 +1,40 @@
+﻿
+<nav class=" shadow navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container ">
+        <NavLink class="navbar-brand" href="" Match="NavLinkMatch.All">
+            <div>
+                <i class="fab fa-magento fa-2x"></i>
+
+            </div>
+        </NavLink>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <NavLink class="nav-link active" aria-current="page" href=" "> Issues</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="customer">Customers</NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="managers">Managers</NavLink>
+                </li>
+               
+
+            </ul>
+            <span class="navbar-text">
+                <span>   Nataliya Lisjö   </span>
+                @*@Manager.FindFirst("DisplayName").Value*@
+                <i class="ms-2 fas fa-user"></i>
+            </span>
+        </div>
+    </div>
+</nav>
+
+@code {
+
+}

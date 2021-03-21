@@ -1,0 +1,26 @@
+﻿
+
+
+@code {
+
+    private string accessToken { get; set; }
+    private SessionModel sessionModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //när det kör-ladda 1 gång--> go to session storage(browser) -hämta/kontrol
+
+
+        try
+        {
+            accessToken = await sessionStorage.GetItemAsync<string>("auth");
+            //accessToken= await http.GetFromJsonAsync  < SessionModel >("https://localhost:44301/api/Managers/login?Key=20l5g437kUGFYzUkjDumZw%==" ,sessionModel  );
+        }
+        catch { }
+
+        if (accessToken == null)
+            NavManager.NavigateTo("/login");
+
+    }
+}
+   

@@ -1,0 +1,129 @@
+﻿@page "/addissues"
+<Auth />
+
+
+<div class="container mt-5">
+    <div class=" d-flex justify-content-center">
+        <h3>Issues , Create New  </h3>
+    </div>
+
+    <div class="issue-grid mt-4 p-5">
+        <div class="col-10">
+            <EditForm Model="issue" OnSubmit="OnSubmitAsync" class="mt-3">
+                <div class="row mb-4">
+                    <input type="text" @bind="issue.IssueDate " class="form-control" placeholder="Issue Date" />
+                </div>
+                <div class="row mb-4">
+                    <input type="text" @bind="issue.Customer " class="form-control" placeholder="Customer" />
+                </div>
+                <div class="row mb-4">
+                    <input type="text" @bind="issue.Manager " class="form-control" placeholder="Manager" />
+                </div>
+                <div class="row mb-4">
+                    <input type="text" @bind="issue.IssueStatus  " class="form-control" placeholder="Issue Status" />
+
+                    @*<select class="form-select" multiple aria-label="multiple select">
+                <option selected>Open this select menu</option>
+                <option value="1">Active</option>
+                <option value="2">inProgress</option>
+                <option value="3">Completed</option>
+            </select>*@
+
+                </div>
+                @*<div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button"  @bind="issue.IssueStatus" data-bs-toggle="Issue Status" aria-expanded="false">Dropdown</button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Active</a></li>
+                <li><a class="dropdown-item" href="#">inProgress</a></li>
+                <li><a class="dropdown-item" href="#">Completed</a></li>
+
+            </ul>
+            <input type="text" class="form-control" aria-label="Text input with dropdown button">
+        </div>*@
+                <div class=" row  mb-4">
+                    <input type="text" @bind="issue.IssueDescription  " class="form-control" placeholder="Description" />
+                </div>
+                <div class="row">
+                    <button class="btn btn-secondary btn-block">Add  </button>
+                </div>
+             
+            </EditForm>
+        </div>
+        @if (issues == null)
+        {
+            <p><em>Not found...</em></p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>IssueDate</th>
+                        <th>Customer</th>
+                        <th>Manager</th>
+                        <th>IssueStatus</th>
+                        <th>IssueDescription</th>
+                        <td>      </td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var issue in issues)
+                    {
+                    <tr>
+                        <td>@issue.Id </td>
+                        <td>@issue.IssueDate </td>
+                        @*  <td>@issue.Customer.DispalyName  </td>*@
+                        @*  <td>@issue.Manager.DispalyName </td>*@
+                        <td>@issue.IssueStatus </td>
+                        <td>@issue.IssueDescription </td>
+                        <td>
+                            @*++link to funktional sida redigering*@
+                            <div class="d-flex justify-content-end align-items-center">
+                                <i class="fas fa-user-edit me-2 "></i>
+                                <i class="fas fa-trash me-2 "></i>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        }
+    </div>
+</div>
+
+
+@code {
+
+    private IssueViewModel issue { get; set; }
+    private IEnumerable<IssueViewModel> issues;
+
+
+
+    private async Task GetIssuesAsync()
+    {
+        issues = await http.GetFromJsonAsync<IEnumerable<IssueViewModel>>("https://localhost:44301/api/Issues?Key=20l5g437kUGFYzUkjDumZw%==");//updatera & hämta
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //  issues = await http.GetFromJsonAsync<IEnumerable<IssueViewModel>>("https://localhost:44301/api/Issues?Key=20l5g437kUGFYzUkjDumZw%==");
+        //("https://localhost:44326/api/issues");
+
+        issue = new IssueViewModel();
+        await GetIssuesAsync();
+    }
+
+
+
+    private async Task OnSubmitAsync()
+    {
+        await http.PostAsJsonAsync<IssueViewModel>("https://localhost:44301/api/Issues?Key=20l5g437kUGFYzUkjDumZw%==", issue);
+        await GetIssuesAsync();
+    }
+
+
+
+}

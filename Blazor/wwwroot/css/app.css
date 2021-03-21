@@ -1,0 +1,45 @@
+﻿body {
+    background: #f1f1f3;
+}
+
+.classes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.card-img-top {
+    width: 60%;
+    position: relative;
+    left: 20%;
+}
+
+.card-text-footer {
+    font-size: 0.8rem;
+}
+
+.card {
+    background: transparent;
+    border: 0;
+    width: 90%;
+}
+
+.card-body {
+    top: -3.5rem;
+    background-color: teal;
+    position: relative;
+    z-index: -1;
+}
+
+.card-body-footer {
+    height: 0.5rem;
+    width: 90%;
+    position: relative;
+    left: 5%;
+    background-color: rgb(108, 177, 177);
+    top: -3.5rem;
+}
+/* issue */
+.issue-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}

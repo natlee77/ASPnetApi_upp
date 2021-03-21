@@ -1,0 +1,51 @@
+﻿
+
+@page "/managers"
+<Auth />
+
+@inject HttpClient http
+
+
+
+<h3> Managers </h3>
+@if (managers == null)
+{
+    <p><em>Not found...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var manager in managers)
+            {
+                <tr>
+                    <td>@manager.Id </td>
+                    <td>@manager.FirstName </td>
+                    <td>@manager.LastName  </td>
+                    <td>@manager.Email </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    //bestämma hur issues ska ser ut
+    private IEnumerable<ManagerViewModel> managers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        managers = await http.GetFromJsonAsync<IEnumerable<ManagerViewModel>>("https://localhost:44301/api/managers?Key=20l5g437kUGFYzUkjDumZw%==");
+    }
+
+
+}
+

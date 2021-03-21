@@ -1,0 +1,56 @@
+﻿@page "/"
+<Auth />
+
+
+
+
+<h3> Issues</h3>
+@if (issues == null)
+{
+    <p><em>Not found...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>IssueDate</th>
+                <th>Customer</th>
+                <th>Manager</th>
+                <th>IssueStatus</th>
+                <th>IssueDescription</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var issue in issues)
+            {
+                <tr>
+                    <td>@issue.Id </td>
+                    <td>@issue.IssueDate </td>
+                    @*<td>@issue.Customer.DispalyName  </td>*@
+                    @* <td>@issue.Manager.DispalyName </td>*@
+                    <td>@issue.IssueStatus </td>
+                    <td>@issue.IssueDescription </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div>
+    <button class="btn btn-secondary btn-block">Edit  </button>
+</div>
+@code {
+    //bestämma hur issues ska ser ut
+    private IEnumerable<IssueViewModel> issues;
+
+    protected override async Task OnInitializedAsync()
+    {
+        issues = await http.GetFromJsonAsync<IEnumerable<IssueViewModel>>("https://localhost:44301/api/Issues?Key=20l5g437kUGFYzUkjDumZw%==");
+        //("https://localhost:44326/api/issues");
+    }
+
+
+}

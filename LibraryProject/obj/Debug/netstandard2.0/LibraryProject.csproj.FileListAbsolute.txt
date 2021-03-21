@@ -1,0 +1,9 @@
+C:\Users\46735\Desktop\CaseManager\LibraryProject\bin\Debug\netstandard2.0\LibraryProject.deps.json
+C:\Users\46735\Desktop\CaseManager\LibraryProject\bin\Debug\netstandard2.0\LibraryProject.dll
+C:\Users\46735\Desktop\CaseManager\LibraryProject\bin\Debug\netstandard2.0\LibraryProject.pdb
+C:\Users\46735\Desktop\CaseManager\LibraryProject\obj\Debug\netstandard2.0\LibraryProject.csprojAssemblyReference.cache
+C:\Users\46735\Desktop\CaseManager\LibraryProject\obj\Debug\netstandard2.0\LibraryProject.AssemblyInfoInputs.cache
+C:\Users\46735\Desktop\CaseManager\LibraryProject\obj\Debug\netstandard2.0\LibraryProject.AssemblyInfo.cs
+C:\Users\46735\Desktop\CaseManager\LibraryProject\obj\Debug\netstandard2.0\LibraryProject.csproj.CoreCompileInputs.cache
+C:\Users\46735\Desktop\CaseManager\LibraryProject\obj\Debug\netstandard2.0\LibraryProject.dll
+C:\Users\46735\Desktop\CaseManager\LibraryProject\obj\Debug\netstandard2.0\LibraryProject.pdb

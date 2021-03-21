@@ -1,0 +1,52 @@
+﻿
+@page "/login"
+
+<h3>Login</h3>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="container  mt-4">
+        <EditForm Model="loginModel" OnSubmit="OnSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            email:
+            <br> 
+            <InputText    id="email"  @bind-Value="loginModel.Email"/>
+            <br>
+            password:  
+            <br>
+            <InputText id="password" @bind-Value="loginModel.Password"/>
+            <br>
+
+
+            <button class=" btn btn-success " type="submit">Login</button>
+        </EditForm>
+    </div>
+</body>
+</html>
+
+@code {
+    private LoginModel loginModel { get; set; }
+    private string token { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        loginModel = new LoginModel();
+    }//annars --> NULL exeption (is not set to instanse object ) 
+
+
+    private async Task OnSubmit()
+    {
+        var httpResponseMessage  =  await http.PostAsJsonAsync<LoginModel>(
+            "https://localhost:44301/api/Managers/login?Key=20l5g437kUGFYzUkjDumZw%==", loginModel) ;
+
+        token = await httpResponseMessage.Content.ReadAsStringAsync();
+
+
+        await sessionStorage.SetItemAsync<string>("auth", token);
+        NavManager.NavigateTo("/");
+    } //anropa api for att logga in (token key)
+
+}
