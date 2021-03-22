@@ -643,3 +643,7 @@ C:\Users\46735\Desktop\CaseManager\Blazor\obj\Debug\net5.0\RazorDeclaration\Page
 C:\Users\46735\Desktop\CaseManager\Blazor\obj\Debug\net5.0\Razor\Pages\AddIssues.razor.g.cs
 C:\Users\46735\Desktop\CaseManager\Blazor\obj\Debug\net5.0\RazorDeclaration\Pages\EditIssue.razor.g.cs
 C:\Users\46735\Desktop\CaseManager\Blazor\obj\Debug\net5.0\Razor\Pages\EditIssue.razor.g.cs
+C:\Users\46735\Desktop\CaseManager\Blazor\bin\Debug\net5.0\wwwroot\_framework\LibraryProject.dll.gz
+C:\Users\46735\Desktop\CaseManager\Blazor\bin\Debug\net5.0\wwwroot\_framework\LibraryProject.dll
+C:\Users\46735\Desktop\CaseManager\Blazor\bin\Debug\net5.0\wwwroot\_framework\LibraryProject.pdb
+C:\Users\46735\Desktop\CaseManager\Blazor\obj\Debug\net5.0\build-gz\INL5NB8a.gz

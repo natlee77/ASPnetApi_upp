@@ -13,92 +13,99 @@ namespace Blazor.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 1 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 2 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using System.Net.Http.Json;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 3 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using System.ComponentModel.DataAnnotations;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 4 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 5 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 6 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 7 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 8 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 9 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 10 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Blazor;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 11 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Blazor.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 12 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 12 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Blazor.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 13 "C:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+#line 13 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
 using Newtonsoft.Json;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "c:\Users\46735\Desktop\CaseManager\Blazor\_Imports.razor"
+using LibraryProject.Models;
 
 #line default
 #line hidden
@@ -112,13 +119,16 @@ using Newtonsoft.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 98 "C:\Users\46735\Desktop\CaseManager\Blazor\Pages\Addissues.razor"
+#line 92 "c:\Users\46735\Desktop\CaseManager\Blazor\Pages\Addissues.razor"
        
 
     private IssueViewModel issue { get; set; }
     private IEnumerable<IssueViewModel> issues;
 
 
+    CreateIssueVM model  = new CreateIssueVM();
+    private HttpResponseMessage result;
+    private string Message;
 
     private async Task GetIssuesAsync()
     {
@@ -127,22 +137,50 @@ using Newtonsoft.Json;
 
     protected override async Task OnInitializedAsync()
     {
-        //  issues = await http.GetFromJsonAsync<IEnumerable<IssueViewModel>>("https://localhost:44301/api/Issues?Key=20l5g437kUGFYzUkjDumZw%==");
-        //("https://localhost:44326/api/issues");
 
-        issue = new IssueViewModel();
+        model = new CreateIssueVM();
         await GetIssuesAsync();
     }
-
 
 
     private async Task OnSubmitAsync()
     {
-        await http.PostAsJsonAsync<IssueViewModel>("https://localhost:44301/api/Issues?Key=20l5g437kUGFYzUkjDumZw%==", issue);
-        await GetIssuesAsync();
+        try
+        {
+            var issue = new CreateIssueVM
+            {
+                CustomerId= model.CustomerId ,
+                ManagerId= model.ManagerId  ,
+                IssueDate = DateTime.Now,
+                ResolveDate = DateTime.MinValue,
+                IssueDescription= model.IssueDescription ,
+                IssueStatus ="active"
+
+            };
+
+
+            result = await http.PostAsJsonAsync<CreateIssueVM>("https://localhost:44301/api/Issues?Key=20l5g437kUGFYzUkjDumZw%==", issue);
+            await GetIssuesAsync();
+
+
+            if (result.IsSuccessStatusCode)
+            {
+                model.IssueDescription = "";
+                model.CustomerId = 0;
+                model.ManagerId = 0;
+                Message = $"has been created!";
+            }
+            else
+            {
+                Message = $"Error: {result.StatusCode}. Try  double-checking the inputs.";
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
-
-
 
 
 #line default
