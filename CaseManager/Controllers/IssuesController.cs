@@ -133,8 +133,9 @@ namespace CaseManager.Controllers
         [HttpPost]    // POST: api/Issues
         public async Task<ActionResult > PostIssue([FromBody] CreateIssueVM model)
         {
-               
-                    try
+            var customer = await _context.Customers.FindAsync(model.CustomerId);
+            var manager = await _context.Managers.FindAsync(model.ManagerId);
+            try
                     {
                         var  issue = new Issue ()
                         {
@@ -145,9 +146,10 @@ namespace CaseManager.Controllers
                             IssueStatus=model.IssueStatus                           
                         };
 
-                        //issue.ManagerId = int.Parse(Manager.("ManagerId").Value);
-                         //                    _context.Managers.Any(m => m.Id ==   ); ;
-                      _context.Issues.Add( issue);
+                        
+                        issue.Customer = customer;
+                        issue.Manager = manager;
+                         _context.Issues.Add( issue);
                         await _context.SaveChangesAsync();
 
                        
