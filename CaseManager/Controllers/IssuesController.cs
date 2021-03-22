@@ -9,6 +9,7 @@ using CaseManager.Data;
 using CaseManager.Entities;
 using Microsoft.AspNetCore.Authorization;
 using CaseManager.Filters;
+using LibraryProject.Models;
 
 namespace CaseManager.Controllers
 {
@@ -33,7 +34,7 @@ namespace CaseManager.Controllers
         public async Task<ActionResult<IEnumerable<Issue>>> GetIssues()
         {
             return await _context.Issues.Include(i => i.Customer).Include(i => i.Manager).ToListAsync();
-            //return await _context.Issues.ToListAsync();
+           
         }
 
       
@@ -77,9 +78,22 @@ namespace CaseManager.Controllers
 
             return issue;
 
-            //return await _context.Issues.OrderBy(x => x.Customer.LastName).ToListAsync();
+            
         }
 
+        [HttpGet("{status }")]
+        public async Task<ActionResult<IEnumerable<Issue>>> GetIssues(   string issueStatus)
+        {
+            var query = _context.Issues.AsQueryable();
+ 
+            if (!string.IsNullOrEmpty(issueStatus))
+            {
+                query = query.Where(x => x.IssueStatus == issueStatus);
+            }
+           
+
+            return await query.ToListAsync();
+        }
 
 
 
@@ -117,12 +131,33 @@ namespace CaseManager.Controllers
        
        
         [HttpPost]    // POST: api/Issues
-        public async Task<ActionResult<Issue>> PostIssue(Issue issue)
+        public async Task<ActionResult > PostIssue([FromBody] CreateIssueVM model)
         {
-            _context.Issues.Add(issue);
-            await _context.SaveChangesAsync();
+               
+                    try
+                    {
+                        var  issue = new Issue ()
+                        {
+                            CustomerId =model.CustomerId,
+                            IssueDate=model.IssueDate,
+                            ResolveDate=model.ResolveDate,
+                            IssueDescription=model.IssueDescription,
+                            IssueStatus=model.IssueStatus                           
+                        };
 
-            return CreatedAtAction("GetIssue", new { id = issue.Id }, issue);
+                        //issue.ManagerId = int.Parse(Manager.("ManagerId").Value);
+                         //                    _context.Managers.Any(m => m.Id ==   ); ;
+                      _context.Issues.Add( issue);
+                        await _context.SaveChangesAsync();
+
+                       
+                    }
+                    catch (Exception ex) { return new BadRequestObjectResult(ex.Message); }
+
+
+            return new OkResult();
+
+
         }
 
        

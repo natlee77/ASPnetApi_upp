@@ -30,8 +30,8 @@ CREATE TABLE Issues(
 	Id int not null identity(1,1) primary key,
 	CustomerId      int not null references Customers(Id),
 	ManagerId int not null references Managers(Id),
-	IssueDate   datetime not null,
-	ResolveDate datetime null,
+	IssueDate   datetime2 not null,
+	ResolveDate datetime2 null,
 	IssueDescription nvarchar(max) not null,
 	IssueStatus      nvarchar(20) not null
 )
